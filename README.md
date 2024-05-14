@@ -1,0 +1,2 @@
+# StickerSmash
+Video Sharing App
