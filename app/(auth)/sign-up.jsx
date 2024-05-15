@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, Image,  View } from 'react-native'
+import { ScrollView, StyleSheet, Text, Image,  View, Alert } from 'react-native'
 import React, {useState} from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { images } from '../../constants'
@@ -15,10 +15,27 @@ const SignUp = () => {
   })
 
   //create loading state
-  const [isSubmitting, setSubmitting] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-const submit = () => {
- createUser();
+const submit = async () => {
+  //check if input fields are empty
+  if(!form.username || !form.email || !form.password){
+    Alert.alert('Error', 'Please fill in all the fileds')
+  }
+  
+  setIsSubmitting(true)
+
+  try{
+  const result = await createUser(form.email, form.password, form.username)
+
+  // when we get the result we set it to global state using context
+
+  router.replace('/home')
+  } catch(error){
+    Alert.alert('Error', error.message)
+  } finally {
+    setIsSubmitting(false)
+  }
 }
   return (
     <SafeAreaView className="bg-primary h-full">
@@ -55,7 +72,7 @@ const submit = () => {
         />
 
       <CustomButton 
-       title="Sign In"
+       title="Sign Up"
        handlePress={submit}
        containerStyles="mt-7"
        isLoading={isSubmitting}
