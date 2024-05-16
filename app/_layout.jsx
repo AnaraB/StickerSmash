@@ -1,9 +1,11 @@
-import { StyleSheet, Text, View } from "react-native";
-import { useEffect} from 'react';
+import { useEffect } from "react";
 import { SplashScreen, Stack } from "expo-router";
 import { useFonts } from "expo-font";
+import { GlobalProvider} from '../context/GlobalContext'
 
-//prevent SplashScreen from auto hiding before autosync is complete
+
+//function is called to prevent the splash screen from auto-hiding before the font loading is complete. 
+//This ensures a smoother transition when the app is ready to render.
 SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
@@ -21,20 +23,21 @@ const RootLayout = () => {
 
   //useEffect while the stream is loading
   useEffect(() => {
-    if(error) throw error;
-    if(fontsLoaded) SplashScreen.hideAsync();
+    if (error) throw error;
+    if (fontsLoaded) SplashScreen.hideAsync();
+  }, [fontsLoaded, error]);
 
-  }, [fontsLoaded, error])
-
-  if(!fontsLoaded && !error) return null;
+  if (!fontsLoaded && !error) return null;
 
   return (
-    <Stack>
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      {/* <Stack.Screen name="/search/[query]" options={{ headerShown: false }} /> */}
-    </Stack>
+    <GlobalProvider>
+      <Stack>
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        {/* <Stack.Screen name="/search/[query]" options={{ headerShown: false }} /> */}
+      </Stack>
+    </GlobalProvider>
   );
 };
 
