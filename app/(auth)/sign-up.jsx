@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { images } from '../../constants'
 import FormField from '../../components/FormField'
 import CustomButton  from '../../components/CustomButtons'
-import { Link } from 'expo-router'
+import { Link, router } from 'expo-router'
 import { createUser } from '../../lib/appwrite'
 
 const SignUp = () => {
