@@ -8,7 +8,7 @@ import { GlobalProvider} from '../context/GlobalContext'
 //This ensures a smoother transition when the app is ready to render.
 SplashScreen.preventAutoHideAsync();
 
-const RootLayout = () => {
+export function RootLayout (){
   const [fontsLoaded, error] = useFonts({
     "Poppins-Black": require("../assets/fonts/Poppins-Black.ttf"),
     "Poppins-Bold": require("../assets/fonts/Poppins-Bold.ttf"),
@@ -41,4 +41,4 @@ const RootLayout = () => {
   );
 };
 
-export default RootLayout;
+// export default RootLayout;
